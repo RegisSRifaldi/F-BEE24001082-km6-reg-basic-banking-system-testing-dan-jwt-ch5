@@ -106,6 +106,9 @@ paths:
               schema:
                 type: object
                 properties:
+                  status:
+                    type: boolean
+                    example: true
                   message:
                     type: string
                     example: OK
@@ -150,8 +153,48 @@ paths:
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: Successfully authenticated user
+        201:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                    example: true
+                  message:
+                    type: boolean
+                    example: OK
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                        example: 4
+                      name:
+                        type: string
+                        example: Regisrifaldi44
+                      email:
+                        type: string
+                        example: regisrifaldi44@gmail.com
+
+        400:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: token not provided!!
+                  data:
+                    type: string
+                    example: null
   /users:
     post:
       tags:
@@ -168,21 +211,62 @@ paths:
               properties:
                 name:
                   type: string
+                  example: Rifaldi
                 email:
                   type: string
+                  example: rifaldi88@gmail.com
                 password:
                   type: string
+                  example: Rifaldi88
                 identityType:
                   type: string
+                  example: KTP
                 identityNumber:
                   type: string
+                  example: "12534235"
                 address:
                   type: string
+                  example: Jl. Mawar no.10 Palembang
       responses:
-        "200":
-          description: Successfully added a new user
-        "400":
-          description: Bad request, missing or invalid parameters
+        201:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Regis Rifaldi
+                  email:
+                    type: string
+                    example: regisrifaldi44@gmail.com
+                  password:
+                    type: string
+                    example: Regisrifaldi44
+                  identityType:
+                    type: string
+                    example: SIM
+                  identityNumber:
+                    type: string
+                    example: "214235321"
+                  address:
+                    type: string
+                    example: Jl. kampung rambutan no.122, Jakarta
+        400:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: false
+                  message:
+                    type: string
+                    example: "email: rifaldi88@gmail.com, telah digunakan sebelumnya!"
+
     get:
       tags:
         - "users"
@@ -190,8 +274,37 @@ paths:
       security:
         - BearerAuth: []
       responses:
-        "200":
-          description: Successfully retrieved a list of users
+        200:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: Berhasil menampilkan semua data users
+                  data:
+                    oneOf:
+                      - type: array
+                      - type: object
+                        properties:
+                          id:
+                            type: number
+                            example: 4
+                          name:
+                            type: string
+                            example: x
+                          email:
+                            type: string
+                            example: x@gmail.com
+                          token:
+                            type: string
+                            example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IlJlZ2lzIFJpZmFsZGkiLCJlbWFpbCI6InJlZ2lzcmlmYWxkaTQ0QGdtYWlsLmNvbSIsImlhdCI6MTcxMzYzMTQ0OX0.jJ6grgfsFNVBBQadiPZPTXvnW9c0H7uUhcUMfdQnk6E
+
   /users-profile:
     get:
       tags:
@@ -302,10 +415,13 @@ paths:
               properties:
                 source_account_id:
                   type: integer
+                  example: 1
                 destination_account_id:
                   type: integer
+                  example: 2
                 amount:
                   type: number
+                  example: 10203049
       responses:
         "200":
           description: Successfully transferred money

@@ -3,9 +3,9 @@ POST http://localhost:3000/api/v1/users
 Content-Type: application/json
 
 {
-    "name": "rifaldi",
+    "name": "Rifaldi",
     "email": "rifaldi88@gmail.com",
-    "password": "rifaldi88",
+    "password": "Rifaldi88",
     "identityType": "KTP",
     "identityNumber": "12534235",
     "address": "Jl. Mawar no.10 Palembang"
