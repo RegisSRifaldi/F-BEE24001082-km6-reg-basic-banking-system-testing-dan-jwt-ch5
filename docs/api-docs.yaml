@@ -1,0 +1,195 @@
+openapi: 3.0.1
+info:
+  title: Banking API
+  description: API Banking
+  version: 1.0.0
+  contact:
+    email: xxx@gmail.com
+servers:
+  - url: http://localhost:3000/api/v1
+paths:
+  /api-docs:
+    post:
+      summary: Create new user
+      description: Mendaftarkan user baru ke dalam sistem
+      requestBody:
+        $ref: "#/components/requestBodies/Register"
+      responses:
+        "201":
+          description: Success
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: "#/components/schemas/Banking"
+                  - type: object
+                    properties:
+                      identity_type:
+                        type: string
+                        example: KTP
+        "400":
+          description: Duplicated email
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: string
+                    example: KTP
+                  message:
+                    type: string
+                    example: Account banking already used!
+      security:
+        - bearerAuth: []
+
+    get:
+      summary: Get all banking
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: KTP
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Banking"
+
+  /api-docs/{id}:
+    parameters:
+      - schema:
+          type: integer
+        name: id
+        in: path
+        required: true
+    get:
+      summary: Get detail banking
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: "#/components/schemas/Banking"
+
+    put:
+      summary: Update banking
+      parameters:
+        - schema:
+            type: integer
+          name: id
+          in: path
+          required: true
+          example: 11
+      requestBody:
+        $ref: "#/components/requestBodies/Register"
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: "#/components/schemas/Banking"
+
+    delete:
+      summary: Delete banking
+      parameters:
+        - schema:
+            type: integer
+          name: id
+          in: path
+          required: true
+          example: 11
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: boolean
+                    example: true
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    $ref: "#/components/schemas/Banking"
+
+components:
+  schemas:
+    Banking:
+      title: Banking
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 11
+        name:
+          type: string
+          example: Samuel
+        email:
+          type: string
+          example: samuel@gmail.com
+        password:
+          type: string
+          example: Samuel77
+        identity_type:
+          type: string
+          example: KTP
+        address:
+          type: string
+          example: "Jl. Kampung Rambutan no.171, Jakarta"
+  requestBodies:
+    Register:
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: Samuel
+              email:
+                type: string
+                example: samuel@gmail.com
+              password:
+                type: string
+                example: Samuel77
+              identity_type:
+                type: string
+                example: KTP
+              identity_number:
+                type: string
+                example: "182938291"
+              address:
+                type: string
+                example: "Jl. Kampung Rambutan no.171, Jakarta"
