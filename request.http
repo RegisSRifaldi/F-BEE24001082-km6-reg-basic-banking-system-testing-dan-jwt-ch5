@@ -86,8 +86,8 @@ Content-Type: application/json
     "password":"Regisrifaldi18"
 }
 
-### whoami
+### authenticate
 GET http://localhost:3000/api/v1/auth/authenticate
 # Authorization: Bearer tokentoken
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzIsIm5hbWUiOiJHaXNhbWFuZyIsImVtYWlsIjoiZ2lzYW1hbmcxMjNAZ21haWwuY29tIiwiaWF0IjoxNzEzNjIzNzQ0fQ.xz8rN-8HgoqBXd8EYWvBHrskMVPVqVY3I_PxCopJL0g
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsIm5hbWUiOiJyZWdpc3JpZmFsZGkxOCIsImVtYWlsIjoicmVnaXNyaWZhbGRpMThAZ21haWwuY29tIiwiaWF0IjoxNzEzNjMzOTM3fQ.2frXadgJvTIiINO9yp2snGkPzZuhWN2iwBKH8wWdbJg
 
