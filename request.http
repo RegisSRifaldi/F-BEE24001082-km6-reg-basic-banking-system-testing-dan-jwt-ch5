@@ -3,12 +3,12 @@ POST http://localhost:3000/api/v1/users
 Content-Type: application/json
 
 {
-    "name": "Regis",
-    "email": "regis@gmail.com",
-    "password": "Regis88",
+    "name": "rifaldi",
+    "email": "rifaldi88@gmail.com",
+    "password": "rifaldi88",
     "identityType": "KTP",
-    "identityNumber": "182938291",
-    "address": "Jl. Banjaran no.29, Bandung"
+    "identityNumber": "12534235",
+    "address": "Jl. Mawar no.10 Palembang"
 }
 
 ### menampilkan daftar users!
@@ -61,30 +61,33 @@ GET http://localhost:3000/api/v1/transaction-profile
 GET http://localhost:3000/api/v1/transaction/1
 
 
+
+
 ### register
 POST http://localhost:3000/api/v1/auth/register
 Content-Type: application/json
 
+
 {
-    "name": "tes",
-    "email": "tes@gmail.com",
-    "password": "tes",
+    "name": "regisrifaldi18",
+    "email": "regisrifaldi18@gmail.com",
+    "password": "Regisrifaldi18",
     "identityType": "KTP",
-    "identityNumber": "182934312",
-    "address": "Jl. Jakarta no.29, Bandung"
+    "identityNumber": "182937658",
+    "address": "Jl. Cemari no.08, Tangerang"
 }
 
 ### login
 POST http://localhost:3000/api/v1/auth/login
 Content-Type: application/json
-
+ 
 {
-    "email":"tes@gmail.com",
-    "password":"tes"
+    "email":"regisrifaldi18@gmail.com",
+    "password":"Regisrifaldi18"
 }
 
 ### whoami
-GET http://localhost:3000/api/v1/auth/whoami
+GET http://localhost:3000/api/v1/auth/authenticate
 # Authorization: Bearer tokentoken
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NzcsIm5hbWUiOiJ0ZXMiLCJlbWFpbCI6InRlc0BnbWFpbC5jb20iLCJpYXQiOjE3MTM2MjExMTd9.UkRZjwczcAvGwGoVqvNHO3jXh5vtwE6wFakEc1tgAb4
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzIsIm5hbWUiOiJHaXNhbWFuZyIsImVtYWlsIjoiZ2lzYW1hbmcxMjNAZ21haWwuY29tIiwiaWF0IjoxNzEzNjIzNzQ0fQ.xz8rN-8HgoqBXd8EYWvBHrskMVPVqVY3I_PxCopJL0g
 

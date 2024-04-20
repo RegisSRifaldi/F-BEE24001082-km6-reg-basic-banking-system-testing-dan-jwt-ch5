@@ -7,7 +7,7 @@ router.post("/register", register);
 router.post(
   "/login",
   passport.authenticate("local", {
-    successRedirect: "/whoami",
+    successRedirect: "/authenticate",
     failureRedirect: "/login",
   })
 );

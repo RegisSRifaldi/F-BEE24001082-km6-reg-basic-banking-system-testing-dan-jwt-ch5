@@ -99,7 +99,7 @@ module.exports = {
     }
   },
 
-  whoami: async (req, res, next) => {
+  authenticate: async (req, res, next) => {
     try {
       res.json({
         status: true,

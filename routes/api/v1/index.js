@@ -38,6 +38,6 @@ let restrict = (req, res, next) => {
 
 router.post("/register", authController.register);
 router.post("/login", authController.login);
-router.get("/whoami", restrict, authController.whoami);
+router.get("/authenticate", restrict, authController.authenticate);
 
 module.exports = router;

@@ -8,9 +8,9 @@ router.get("/register", (req, res) => {
 router.get("/login", (req, res) => {
   res.render("login");
 });
-router.get("/whoami", restrict, (req, res) => {
+router.get("/authenticate", restrict, (req, res) => {
   console.info(req.user);
-  res.render("whoami", { user: req.user });
+  res.render("authenticate", { user: req.user });
 });
 
 module.exports = router;

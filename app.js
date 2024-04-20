@@ -3,6 +3,7 @@ const express = require("express");
 const flash = require("express-flash");
 const session = require("express-session");
 const logger = require("morgan");
+const cors = require("cors");
 const router = require("./routes/api/v1");
 const app = express();
 const authController = require("./controllers/v1/authController");
@@ -13,6 +14,7 @@ const { SESSION_SECRET } = process.env;
 // const bodyParser = require("body-parser");
 app.use(logger("dev"));
 app.use(express.json());
+app.use(cors());
 app.use(router);
 
 // app.use(express.urlencoded());

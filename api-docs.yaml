@@ -1,81 +1,70 @@
-openapi: 3.0.1
+openapi: 3.0.0
 info:
-  title: Banking API
-  description: API Banking
+  title: Login, Register, Authenticate, and API Documentation
+  description: API for user authentication, user management, and banking transactions
   version: 1.0.0
-  contact:
-    email: xxx@gmail.com
 servers:
   - url: http://localhost:3000/api/v1
+
 paths:
-  /api-docs:
+  /auth/register:
     post:
-      summary: Create new user
-      description: Mendaftarkan user baru ke dalam sistem
+      tags:
+        - "register"
+      summary: Register a new user
       requestBody:
-        $ref: "#/components/requestBodies/Register"
-      responses:
-        "201":
-          description: Success
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: "#/components/schemas/Banking"
-                  - type: object
-                    properties:
-                      identity_type:
-                        type: string
-                        example: KTP
-        "400":
-          description: Duplicated email
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  success:
-                    type: string
-                    example: KTP
-                  message:
-                    type: string
-                    example: Account banking already used!
-      security:
-        - bearerAuth: []
-
-    get:
-      summary: Get all banking
-      responses:
-        "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                    example: KTP
-                  message:
-                    type: string
-                    example: OK
-                  data:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Banking"
-
-  /api-docs/{id}:
-    parameters:
-      - schema:
-          type: integer
-        name: id
-        in: path
         required: true
-    get:
-      summary: Get detail banking
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Regis Rifaldi
+                email:
+                  type: string
+                  example: regisrifaldi44@gmail.com
+                password:
+                  type: string
+                  example: Regisrifaldi44
+                identityType:
+                  type: string
+                  example: SIM
+                identityNumber:
+                  type: string
+                  example: "214235321"
+                address:
+                  type: string
+                  example: Jl. kampung rambutan no.122, Jakarta
       responses:
-        "200":
-          description: Success
+        201:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                    example: Regis Rifaldi
+                  email:
+                    type: string
+                    example: regisrifaldi44@gmail.com
+                  password:
+                    type: string
+                    example: Regisrifaldi44
+                  identityType:
+                    type: string
+                    example: SIM
+                  identityNumber:
+                    type: string
+                    example: "214235321"
+                  address:
+                    type: string
+                    example: Jl. kampung rambutan no.122, Jakarta
+        400:
+          description: success
           content:
             application/json:
               schema:
@@ -83,27 +72,61 @@ paths:
                 properties:
                   status:
                     type: boolean
-                    example: true
+                    example: false
                   message:
                     type: string
-                    example: OK
+                    example: email has already been used!
                   data:
-                    $ref: "#/components/schemas/Banking"
-
-    put:
-      summary: Update banking
-      parameters:
-        - schema:
-            type: integer
-          name: id
-          in: path
-          required: true
-          example: 11
+                    type: string
+                    example: null
+  /auth/login:
+    post:
+      tags:
+        - "login"
+      summary: Log in with email and password
       requestBody:
-        $ref: "#/components/requestBodies/Register"
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: regisrifaldi44@gmail.com
+                password:
+                  type: string
+                  example: Regisrifaldi44
+
       responses:
-        "200":
-          description: Success
+        201:
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: OK
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                        example: 4
+                      name:
+                        type: string
+                        example: Regisrifaldi44
+                      email:
+                        type: string
+                        example: regisrifaldi44@gmail.com
+                      token:
+                        type: string
+                        example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NCwibmFtZSI6IlJlZ2lzIFJpZmFsZGkiLCJlbWFpbCI6InJlZ2lzcmlmYWxkaTQ0QGdtYWlsLmNvbSIsImlhdCI6MTcxMzYzMTQ0OX0.jJ6grgfsFNVBBQadiPZPTXvnW9c0H7uUhcUMfdQnk6E
+
+        400:
+          description: success
           content:
             application/json:
               schema:
@@ -111,85 +134,223 @@ paths:
                 properties:
                   status:
                     type: boolean
-                    example: true
+                    example: false
                   message:
                     type: string
-                    example: OK
+                    example: invalid email or password!
                   data:
-                    $ref: "#/components/schemas/Banking"
+                    type: string
+                    example: null
 
-    delete:
-      summary: Delete banking
+  /auth/authenticate:
+    get:
+      tags:
+        - "authenticate"
+      summary: Authenticate user using token
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Successfully authenticated user
+  /users:
+    post:
+      tags:
+        - "users"
+      summary: Add a new user along with their profile
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                identityType:
+                  type: string
+                identityNumber:
+                  type: string
+                address:
+                  type: string
+      responses:
+        "200":
+          description: Successfully added a new user
+        "400":
+          description: Bad request, missing or invalid parameters
+    get:
+      tags:
+        - "users"
+      summary: Get a list of users
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Successfully retrieved a list of users
+  /users-profile:
+    get:
+      tags:
+        - "users"
+      summary: Get a list of users along with their profiles
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Successfully retrieved a list of users with profiles
+  /users/{id}:
+    get:
+      tags:
+        - "users"
+      summary: Get user details by ID along with their profile
+      security:
+        - BearerAuth: []
       parameters:
-        - schema:
-            type: integer
+        - in: path
           name: id
-          in: path
+          schema:
+            type: integer
           required: true
-          example: 11
+          description: ID of the user to retrieve
       responses:
         "200":
-          description: Success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: boolean
-                    example: true
-                  message:
-                    type: string
-                    example: OK
-                  data:
-                    $ref: "#/components/schemas/Banking"
-
-components:
-  schemas:
-    Banking:
-      title: Banking
-      type: object
-      properties:
-        id:
-          type: integer
-          example: 11
-        name:
-          type: string
-          example: Samuel
-        email:
-          type: string
-          example: samuel@gmail.com
-        password:
-          type: string
-          example: Samuel77
-        identity_type:
-          type: string
-          example: KTP
-        address:
-          type: string
-          example: "Jl. Kampung Rambutan no.171, Jakarta"
-  requestBodies:
-    Register:
-      content:
-        application/json:
+          description: Successfully retrieved user details by ID with profile
+        "404":
+          description: User not found
+  /account:
+    post:
+      tags:
+        - "account"
+      summary: Add a new account to an existing user
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_id:
+                  type: integer
+                bank_name:
+                  type: string
+                bank_account_number:
+                  type: string
+                balance:
+                  type: number
+      responses:
+        "200":
+          description: Successfully added a new account
+        "400":
+          description: Bad request, missing or invalid parameters
+    get:
+      tags:
+        - "account"
+      summary: Get a list of accounts
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Successfully retrieved a list of accounts
+  /account-profile:
+    get:
+      tags:
+        - "account"
+      summary: Get a list of accounts along with user details
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Successfully retrieved a list of accounts with user details
+  /account/{id}:
+    get:
+      tags:
+        - "account"
+      summary: Get account details by ID along with user details
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
           schema:
-            type: object
-            properties:
-              name:
-                type: string
-                example: Samuel
-              email:
-                type: string
-                example: samuel@gmail.com
-              password:
-                type: string
-                example: Samuel77
-              identity_type:
-                type: string
-                example: KTP
-              identity_number:
-                type: string
-                example: "182938291"
-              address:
-                type: string
-                example: "Jl. Kampung Rambutan no.171, Jakarta"
+            type: integer
+          required: true
+          description: ID of the account to retrieve
+      responses:
+        "200":
+          description: Successfully retrieved account details by ID with user details
+        "404":
+          description: Account not found
+  /transaction:
+    post:
+      tags:
+        - "transaction"
+      summary: Transfer money from one account to another
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                source_account_id:
+                  type: integer
+                destination_account_id:
+                  type: integer
+                amount:
+                  type: number
+      responses:
+        "200":
+          description: Successfully transferred money
+        "400":
+          description: Bad request, missing or invalid parameters
+    get:
+      tags:
+        - "transaction"
+      summary: Get a list of transactions
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Successfully retrieved a list of transactions
+  /transaction-profile:
+    get:
+      tags:
+        - "transaction"
+      summary: Get a list of transactions along with account and user details
+      security:
+        - BearerAuth: []
+      responses:
+        "200":
+          description: Successfully retrieved a list of transactions with account and user details
+  /transaction/{id}:
+    get:
+      tags:
+        - "transaction"
+      summary: Get transaction details by ID along with sender and receiver details
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: ID of the transaction to retrieve
+      responses:
+        "200":
+          description: Successfully retrieved transaction details by ID with sender and receiver details
+        "404":
+          description: Transaction not found
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
