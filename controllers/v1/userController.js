@@ -64,79 +64,79 @@ module.exports = {
   },
 
   // Menampilkan semua daftar user!
-  // index: async (req, res, next) => {
-  //   try {
-  //     let users = await prisma.user.findMany();
+  index: async (req, res, next) => {
+    try {
+      let users = await prisma.user.findMany();
 
-  //     if (!users) {
-  //       return res.status(400).json({
-  //         status: false,
-  //         message: "data users tidak tersedia!",
-  //         data: null,
-  //       });
-  //     }
-  //     res.status(200).json({
-  //       status: true,
-  //       message: "Berhasil menampilkan semua data users",
-  //       data: users,
-  //     });
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // },
+      if (!users) {
+        return res.status(400).json({
+          status: false,
+          message: "data users tidak tersedia!",
+          data: null,
+        });
+      }
+      res.status(200).json({
+        status: true,
+        message: "Berhasil menampilkan semua data users",
+        data: users,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
 
-  // // 'improvisasi' menampilkan detail informasi user dengan tampilan detail profilnya!
-  // index2: async (req, res, next) => {
-  //   try {
-  //     let users = await prisma.user.findMany({
-  //       include: {
-  //         profile: true,
-  //       },
-  //     });
+  // 'improvisasi' menampilkan detail informasi user dengan tampilan detail profilnya!
+  index2: async (req, res, next) => {
+    try {
+      let users = await prisma.user.findMany({
+        include: {
+          profile: true,
+        },
+      });
 
-  //     if (!users) {
-  //       return res.status(400).json({
-  //         status: false,
-  //         message: "data users tidak tersedia!",
-  //         data: null,
-  //       });
-  //     }
-  //     res.status(200).json({
-  //       status: true,
-  //       message: "Berhasil menampilkan semua data users",
-  //       data: users,
-  //     });
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // },
+      if (!users) {
+        return res.status(400).json({
+          status: false,
+          message: "data users tidak tersedia!",
+          data: null,
+        });
+      }
+      res.status(200).json({
+        status: true,
+        message: "Berhasil menampilkan semua data users",
+        data: users,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
 
-  // // menampilkan detail informasi user dengan menampilkan juga profilnya!
-  // show: async (req, res, next) => {
-  //   try {
-  //     let id = Number(req.params.id);
-  //     let users = await prisma.user.findUnique({
-  //       where: { id },
-  //       include: {
-  //         profile: true,
-  //       },
-  //     });
+  // menampilkan detail informasi user dengan menampilkan juga profilnya!
+  show: async (req, res, next) => {
+    try {
+      let id = Number(req.params.id);
+      let users = await prisma.user.findUnique({
+        where: { id },
+        include: {
+          profile: true,
+        },
+      });
 
-  //     if (!users) {
-  //       return res.status(400).json({
-  //         status: false,
-  //         message: `Tidak dapat menemukan user dengan id ${id}`,
-  //         data: null,
-  //       });
-  //     }
+      if (!users) {
+        return res.status(400).json({
+          status: false,
+          message: `Tidak dapat menemukan user dengan id ${id}`,
+          data: null,
+        });
+      }
 
-  //     res.status(200).json({
-  //       status: true,
-  //       message: `Berhasil, menampilkan data user dengan id ${id}`,
-  //       data: users,
-  //     });
-  //   } catch (error) {
-  //     next(error);
-  //   }
-  // },
+      res.status(200).json({
+        status: true,
+        message: `Berhasil, menampilkan data user dengan id ${id}`,
+        data: users,
+      });
+    } catch (error) {
+      next(error);
+    }
+  },
 };

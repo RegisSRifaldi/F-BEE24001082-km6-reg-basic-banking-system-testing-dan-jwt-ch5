@@ -6,8 +6,8 @@ Content-Type: application/json
     "name": "Regis",
     "email": "regis@gmail.com",
     "password": "Regis88",
-    "identity_type": "KTP",
-    "identity_number": "182938291",
+    "identityType": "KTP",
+    "identityNumber": "182938291",
     "address": "Jl. Banjaran no.29, Bandung"
 }
 
@@ -59,3 +59,35 @@ GET http://localhost:3000/api/v1/transaction-profile
 
 ### menampilkan detail transaksi dengan menampilkan pengirim dan penerimanya!
 GET http://localhost:3000/api/v1/transaction/1
+
+
+
+
+### register
+POST http://localhost:3000/api/v1/auth/register
+Content-Type: application/json
+
+
+{
+    "name": "tes",
+    "email": "tes@gmail.com",
+    "password": "tes",
+    "identityType": "KTP",
+    "identityNumber": "182934312",
+    "address": "Jl. Jakarta no.29, Bandung"
+}
+
+### login
+POST http://localhost:3000/api/v1/auth/login
+Content-Type: application/json
+
+{
+    "email":"tes@gmail.com",
+    "password":"tes"
+}
+
+### whoami
+GET http://localhost:3000/api/v1/auth/whoami
+# Authorization: Bearer tokentoken
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTgsIm5hbWUiOiJ0ZXMiLCJlbWFpbCI6InRlc0BnbWFpbC5jb20iLCJpYXQiOjE3MTM2MTU4Njh9.-GyTeCKh-q43b1HhVInTMaFR9SJb13K_g-0yRe0ldr4
+

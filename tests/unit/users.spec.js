@@ -5,12 +5,12 @@ const { createUser, getUserById } = require("../../services/users");
 let user = {};
 
 describe("test createUser()", () => {
-  let name = "regis1";
+  let name = "Regis Syawaludin Rifaldi";
   let email = "regis1@gmail.com";
   let password = "regis1";
-  let identityType = "regis1";
-  let identityNumber = "regis1";
-  let address = "regis1";
+  let identityType = "KTP";
+  let identityNumber = "182938291";
+  let address = "Jl. Banjaran no.29, Bandung";
 
   // remove all users
   beforeAll(async () => {
