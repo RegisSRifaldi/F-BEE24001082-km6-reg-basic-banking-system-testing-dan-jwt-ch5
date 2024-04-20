@@ -1,6 +1,6 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-const { verify } = require("../controllers/v1/authController");
+const { login } = require("../controllers/v1/authController");
 
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
@@ -17,7 +17,7 @@ passport.use(
       usernameField: "email",
       passwordField: "password",
     },
-    verify
+    login
   )
 );
 

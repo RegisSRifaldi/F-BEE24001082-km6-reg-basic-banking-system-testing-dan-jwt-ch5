@@ -1,20 +1,40 @@
 require("dotenv").config();
 const express = require("express");
+const flash = require("express-flash");
+const session = require("express-session");
 const logger = require("morgan");
 const router = require("./routes/api/v1");
 const app = express();
-const cors = require("cors");
+const authController = require("./controllers/v1/authController");
+app.post("/login", authController.login);
 
-app.use(cors());
+const { SESSION_SECRET } = process.env;
+
+// const bodyParser = require("body-parser");
 app.use(logger("dev"));
 app.use(express.json());
 app.use(router);
 
+// app.use(express.urlencoded());
+app.use(express.urlencoded());
+app.use(
+  session({
+    secret: SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+const passport = require("./libs/passport");
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
 app.set("view engine", "ejs");
 
-app.get("/", (req, res) => {
-  res.send("Hi");
-});
+const web = require("./routes/api/v1/webs");
+app.use("/", web);
+const api = require("./routes/api/v1/api");
+app.use("/api/v1", api);
 
 const swaggerUI = require("swagger-ui-express");
 const YAML = require("yaml");

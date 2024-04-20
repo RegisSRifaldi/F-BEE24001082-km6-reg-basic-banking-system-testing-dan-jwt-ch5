@@ -1,17 +1,28 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = process.env;
+const bcrypt = require("bcrypt");
+const passport = require("passport");
 
 module.exports = {
   register: async (req, res, next) => {
     try {
-      let { name, email, password, role } = req.body;
-      if (!name || !email || !password) {
+      let { name, email, password, identityType, identityNumber, address } =
+        req.body;
+
+      if (
+        !name ||
+        !email ||
+        !password ||
+        !identityType ||
+        !identityNumber ||
+        !address
+      ) {
         return res.status(400).json({
           status: false,
-          message: "name, email and password are required!",
+          message:
+            "name, email, password, identityType, identityNumber, and address are required!",
           data: null,
         });
       }
@@ -26,20 +37,17 @@ module.exports = {
       }
 
       let encryptedPassword = await bcrypt.hash(password, 10);
-      let userData = {
-        name,
-        email,
-        password: encryptedPassword,
-      };
-      if (role) userData.role = role;
-      let user = await prisma.user.create({ data: userData });
-      delete user.password;
-
-      return res.status(201).json({
-        status: true,
-        message: "OK",
-        data: user,
+      await prisma.user.create({
+        data: { name, email, password: encryptedPassword },
       });
+
+      // res.json({
+      //   status: true,
+      //   message: "OK",
+      //   data: user,
+      // });
+
+      return res.redirect("/login");
     } catch (error) {
       next(error);
     }
@@ -48,6 +56,7 @@ module.exports = {
   login: async (req, res, next) => {
     try {
       let { email, password } = req.body;
+
       if (!email || !password) {
         return res.status(400).json({
           status: false,
@@ -83,6 +92,8 @@ module.exports = {
         message: "OK",
         data: { ...user, token },
       });
+
+      // return done(null, user);
     } catch (error) {
       next(error);
     }
